@@ -31,11 +31,10 @@ class AnimalSerializer(serializers.Serializer):
     )
     group = GroupSerializer()
     traits = TraitSerializer(many=True)
-    age_in_human_years = serializers.SerializerMethodField()
-    
-    def get_age_in_human_years(self, obj):
-        human_age = 16 * math.log(obj.age) + 31
-        return round(human_age)
+    age_human = serializers.SerializerMethodField(method_name="age_in_human_years")
+
+    def age_in_human_years(self, obj: Animal):
+        return obj.get_age_in_human_years()
 
     def create(self, validated_data: dict) -> Animal:
         group_data = validated_data.pop("group")

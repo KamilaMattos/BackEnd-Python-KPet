@@ -8,7 +8,11 @@ from .serializers import AnimalSerializer, AnimalListSerializer
 class AnimalView(APIView):
     def get(self, req: Request) -> Response:
         animals = Animal.objects.all()
-        serializer = AnimalListSerializer(animals, many=True)
+
+        if not animals:
+            return Response({"detail": "Not found!"}, status.HTTP_404_NOT_FOUND)
+
+        serializer = AnimalSerializer(animals, many=True)
 
         return Response(serializer.data)
 
@@ -34,7 +38,11 @@ class AnimalDetailView(APIView):
         animal = get_object_or_404(Animal, id=animal_id)
         serializer = AnimalSerializer(animal, req.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+
+        try:
+            serializer.save()
+        except KeyError as error:
+            return Response(*error.args)
 
         return Response(serializer.data)
 

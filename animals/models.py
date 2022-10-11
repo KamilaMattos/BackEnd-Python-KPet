@@ -1,3 +1,4 @@
+import math
 from django.db import models
 
 
@@ -18,3 +19,7 @@ class Animal(models.Model):
         "groups.Group", on_delete=models.CASCADE, related_name="animals"
     )
     traits = models.ManyToManyField("traits.Trait", related_name="animals")
+
+    def get_age_in_human_years(self) -> str:
+        human_age = 16 * int(math.log(self.age)) + 31
+        return f"O seu pet {self.name} tem {human_age} anos humanos!"
