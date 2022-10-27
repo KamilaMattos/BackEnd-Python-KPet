@@ -1,7 +1,7 @@
 # K Pet
 
 Uma aplicação simples para ajudar donos de PetShop a guardar dados de animais. Desenvolvido para a prática dos conceitos aprendidos 
-sobre Relacionamento, Serializers e Testes. #Python #Django #DjangoRestFramework.
+sobre Relacionamento, Serializers e Testes.
 
 # Instruções:
  
@@ -32,6 +32,5 @@ pip install -r requirements.txt
 ./manage.py migrate
 
 # Windows
-
 python manage.py migrate
 ```
